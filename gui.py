@@ -204,59 +204,127 @@ class FinanceTrackerGUI:
         """Initialize all main app components"""
         try:
             self.root.title("Finnova - Personal Finance Manager")
-            self.root.geometry("1200x800")
-            self.root.minsize(1000, 700)
+            self.root.geometry("1400x900")  # Increased default size
+            self.root.minsize(1200, 800)  # Increased minimum size
+            
+            # Configure grid weight for responsive layout
+            self.root.grid_rowconfigure(0, weight=1)
+            self.root.grid_columnconfigure(0, weight=1)
 
             set_theme(self.root)
 
-            # Main Frame Layout
-            self.main_frame = tk.Frame(self.root, bg="#E8F0FF")
+            # Main Frame Layout with modern color scheme
+            self.main_frame = tk.Frame(self.root, bg="#F0F4F8")
             self.main_frame.pack(fill=tk.BOTH, expand=True)
+            
+            # Configure grid weights for responsive layout
+            self.main_frame.grid_rowconfigure(1, weight=1)
+            self.main_frame.grid_columnconfigure(0, weight=1)
 
-            # Simplified Header
-            self.header_frame = tk.Frame(self.main_frame, bg="#1C2E40")
+            # Modern Header with gradient effect
+            self.header_frame = tk.Frame(self.main_frame)
             self.header_frame.pack(fill=tk.X)
             
-            # Only keep the app name in header
-            self.header_label = tk.Label(self.header_frame, 
-                                     text="Finnova",
-                                     font=("Helvetica Neue", 22, "bold"),
-                                     bg="#1C2E40",
-                                     fg="white",
-                                     pady=18)
-            self.header_label.pack(side=tk.LEFT, padx=25)
+            # Create gradient header effect
+            gradient_canvas = tk.Canvas(self.header_frame, height=70, bg='#1A237E', highlightthickness=0)
+            gradient_canvas.pack(fill=tk.X)
+            
+            # App logo and name in header
+            self.header_label = tk.Label(
+                self.header_frame, 
+                text="📊 Finnova",
+                font=("Segoe UI", 28, "bold"),
+                bg="#1A237E",
+                fg="white",
+                pady=15
+            )
+            self.header_label.place(relx=0.02, rely=0.5, anchor="w")
+            
+            # Add version label
+            version_label = tk.Label(
+                self.header_frame,
+                text="v2.0",
+                font=("Segoe UI", 10),
+                bg="#1A237E",
+                fg="#B0BEC5"
+            )
+            version_label.place(relx=0.98, rely=0.8, anchor="e")
 
-            # Separator Frame - Now contains all the info that was in header
-            self.separator_frame = tk.Frame(self.main_frame, bg="#D0E0F0", height=36)
+            # Info bar with modern design
+            self.separator_frame = tk.Frame(self.main_frame, bg="#FFFFFF", height=50)
             self.separator_frame.pack(fill=tk.X)
+            self.separator_frame.pack_propagate(False)
 
             self.separator_frame.grid_columnconfigure(0, weight=1)
             self.separator_frame.grid_columnconfigure(1, weight=1)
             self.separator_frame.grid_columnconfigure(2, weight=1)
 
-            # Welcome message (left)
-            self.welcome_label = tk.Label(self.separator_frame,
-                                        text=f"Welcome {self.username}",
-                                        font=("Helvetica Neue", 13, "bold"),
-                                        bg="#D0E0F0",
-                                        fg="#1A2530")
-            self.welcome_label.grid(row=0, column=0, padx=25, pady=0, ipady=3, sticky=tk.W)
-
-            # Current date (center)
-            self.date_label = tk.Label(self.separator_frame,
-                                      text="",
-                                      font=("Helvetica Neue", 13, "bold"),
-                                      bg="#D0E0F0",
-                                      fg="#1A2530")
-            self.date_label.grid(row=0, column=1, pady=0, ipady=3)
+            # Welcome message with avatar
+            welcome_frame = tk.Frame(self.separator_frame, bg="#FFFFFF")
+            welcome_frame.pack(side=tk.LEFT, padx=20)
             
-            # Current time (right)
-            self.time_label = tk.Label(self.separator_frame,
-                                     text="",
-                                     font=("Helvetica Neue", 13, "bold"),
-                                     bg="#D0E0F0",
-                                     fg="#1A2530")
-            self.time_label.grid(row=0, column=2, padx=25, pady=0, ipady=3, sticky=tk.E)
+            # User avatar (emoji as placeholder)
+            avatar_label = tk.Label(
+                welcome_frame,
+                text="👤",
+                font=("Segoe UI", 16),
+                bg="#FFFFFF",
+                fg="#1A237E"
+            )
+            avatar_label.pack(side=tk.LEFT, padx=(0, 10))
+            
+            self.welcome_label = tk.Label(
+                welcome_frame,
+                text=f"Welcome back, {self.username}!",
+                font=("Segoe UI", 12, "bold"),
+                bg="#FFFFFF",
+                fg="#1A237E"
+            )
+            self.welcome_label.pack(side=tk.LEFT)
+
+            # Date display with icon
+            date_frame = tk.Frame(self.separator_frame, bg="#FFFFFF")
+            date_frame.pack(side=tk.LEFT, expand=True)
+            
+            date_icon = tk.Label(
+                date_frame,
+                text="📅",
+                font=("Segoe UI", 14),
+                bg="#FFFFFF",
+                fg="#1A237E"
+            )
+            date_icon.pack(side=tk.LEFT, padx=(0, 5))
+            
+            self.date_label = tk.Label(
+                date_frame,
+                text="",
+                font=("Segoe UI", 12),
+                bg="#FFFFFF",
+                fg="#1A237E"
+            )
+            self.date_label.pack(side=tk.LEFT)
+            
+            # Time display with icon
+            time_frame = tk.Frame(self.separator_frame, bg="#FFFFFF")
+            time_frame.pack(side=tk.RIGHT, padx=20)
+            
+            time_icon = tk.Label(
+                time_frame,
+                text="⏰",
+                font=("Segoe UI", 14),
+                bg="#FFFFFF",
+                fg="#1A237E"
+            )
+            time_icon.pack(side=tk.LEFT, padx=(0, 5))
+            
+            self.time_label = tk.Label(
+                time_frame,
+                text="",
+                font=("Segoe UI", 12),
+                bg="#FFFFFF",
+                fg="#1A237E"
+            )
+            self.time_label.pack(side=tk.LEFT)
             
             self.update_time()
 
@@ -264,10 +332,14 @@ class FinanceTrackerGUI:
             self.content_frame = tk.Frame(self.main_frame, bg="#E8F0FF")
             self.content_frame.pack(fill=tk.BOTH, expand=True)
 
-            # Sidebar
-            self.sidebar = tk.Frame(self.content_frame, bg="#2C3E50", width=250)
+            # Modern sidebar with shadow effect
+            self.sidebar = tk.Frame(self.content_frame, bg="#FFFFFF", width=280)
             self.sidebar.pack(side=tk.LEFT, fill=tk.Y)
             self.sidebar.pack_propagate(False)
+            
+            # Add subtle shadow effect
+            shadow_frame = tk.Frame(self.sidebar, bg="#E0E0E0", width=2)
+            shadow_frame.pack(side=tk.RIGHT, fill=tk.Y)
 
             self.create_sidebar_buttons()
 
@@ -301,16 +373,20 @@ class FinanceTrackerGUI:
         self.date_label.after(1000, self.update_time)
 
     def create_sidebar_buttons(self):
-        # Add logo or app name at the top of sidebar
+        # Modern sidebar header with app logo
+        sidebar_header = tk.Frame(self.sidebar, bg="#FFFFFF", height=80)
+        sidebar_header.pack(fill="x")
+        sidebar_header.pack_propagate(False)
+        
         logo_label = tk.Label(
-            self.sidebar,
+            sidebar_header,
             text="FINNOVA",
-            font=("Helvetica Neue", 18, "bold"),
-            bg="#2C3E50",
-            fg="#ECF0F1",
+            font=("Segoe UI", 20, "bold"),
+            bg="#FFFFFF",
+            fg="#1A237E",
             pady=20
         )
-        logo_label.pack(fill="x")
+        logo_label.pack()
 
         # Add separator
         separator = ttk.Separator(self.sidebar, orient="horizontal")
@@ -330,42 +406,74 @@ class FinanceTrackerGUI:
         button_frame.pack(fill="x", pady=10)
 
         for text, command in menu_items:
+            # Create hover effect frame
+            button_container = tk.Frame(button_frame, bg="#FFFFFF")
+            button_container.pack(fill="x", pady=3, padx=15)
+            
             button = tk.Button(
-                button_frame,
+                button_container,
                 text=text,
-                font=("Helvetica Neue", 14, "bold"),
-                bg="#34495E",
-                fg="white",
+                font=("Segoe UI", 13),
+                bg="#FFFFFF",
+                fg="#424242",
                 bd=0,
                 relief="flat",
-                activebackground="#1A2939",
-                activeforeground="#ECF0F1",
+                activebackground="#E8EAF6",
+                activeforeground="#1A237E",
                 command=command,
-                pady=14,
-                padx=25,
+                pady=12,
+                padx=20,
                 anchor="w",
                 cursor="hand2",
+                width=25  # Fixed width for uniform appearance
             )
-            button.pack(fill="x", pady=6, padx=15)
+            button.pack(fill="x")
+            
+            # Bind hover effects
+            def on_enter(e):
+                e.widget.config(bg="#E8EAF6", fg="#1A237E")
+                e.widget.master.config(bg="#E8EAF6")
+            
+            def on_leave(e):
+                e.widget.config(bg="#FFFFFF", fg="#424242")
+                e.widget.master.config(bg="#FFFFFF")
+            
+            button.bind("<Enter>", on_enter)
+            button.bind("<Leave>", on_leave)
 
-        # Add logout button
+        # Modern logout button with hover effect
+        logout_container = tk.Frame(button_frame, bg="#FFFFFF")
+        logout_container.pack(fill="x", pady=(20, 10), padx=15)
+        
         logout_button = tk.Button(
-            button_frame,
+            logout_container,
             text="🔒 Logout",
             command=self.logout,
-            font=("Helvetica Neue", 14, "bold"),
-            bg="#E74C3C",
-            fg="white",
+            font=("Segoe UI", 13),
+            bg="#FFF3F3",
+            fg="#D32F2F",
             bd=0,
             relief="flat",
-            activebackground="#C0392B",
-            activeforeground="#ECF0F1",
-            pady=14,
-            padx=25,
+            activebackground="#FFEBEE",
+            activeforeground="#C62828",
+            pady=12,
+            padx=20,
             anchor="w",
             cursor="hand2",
+            width=25
         )
-        logout_button.pack(fill="x", pady=(20, 10), padx=15)
+        logout_button.pack(fill="x")
+        
+        def on_logout_enter(e):
+            e.widget.config(bg="#FFEBEE")
+            e.widget.master.config(bg="#FFEBEE")
+        
+        def on_logout_leave(e):
+            e.widget.config(bg="#FFF3F3")
+            e.widget.master.config(bg="#FFF3F3")
+        
+        logout_button.bind("<Enter>", on_logout_enter)
+        logout_button.bind("<Leave>", on_logout_leave)
 
         # Add social media section
         social_frame = tk.Frame(self.sidebar, bg="#2C3E50", pady=10)
@@ -2282,4 +2390,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main(), 
+    main()
